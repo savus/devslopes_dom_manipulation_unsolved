@@ -35,6 +35,47 @@
  * * /~/ action with the item's id depending on if it is in LS or not. The function should
  * * /~/ do that to a specific item that has a specific class value
  * * add the event listener to the container, pass the callback.
- */
+*/
 
 // Your code goes here...
+
+const container = document.querySelector('.cardsContainer');
+container.id = 'favs';
+const children = Array.from(container.children);
+let favs = [];
+
+const checkFavs = () => {
+   if (localStorage.getItem('favorites')) {
+      favs = JSON.parse(localStorage.getItem('favorites')).items;
+      for (let i = 0; i < children.length; i++) {  
+         if (document.getElementById(favs[i])) {
+            document.getElementById(favs[i]).classList.add('item');
+         }
+      }
+   }
+};
+
+checkFavs();
+
+const addFav = (id) => {
+   favs.push(id);
+   localStorage.setItem('favorites', JSON.stringify({items:[...favs]}));
+};
+
+const removeFav = (id) => {
+   favs.splice(favs.indexOf(id), 1);
+   localStorage.setItem('favorites', JSON.stringify({items:[...favs]}));
+};
+
+const updateBackground = (e) => {
+   const item = e.target;
+   if (Array.from(item.classList).includes('item') && favs.includes(item.id)) {
+      item.classList.remove('item');
+      removeFav(item.id);
+   } else {
+      item.classList.add('item');
+      addFav(item.id);
+   }
+};
+
+container.addEventListener('click', updateBackground);

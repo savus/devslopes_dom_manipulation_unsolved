@@ -57,14 +57,18 @@ const checkFavs = () => {
 
 checkFavs();
 
+const storeFav = () => {
+   localStorage.setItem('favorites', JSON.stringify({items:[...favs]}));
+};
+
 const addFav = (id) => {
    favs.push(id);
-   localStorage.setItem('favorites', JSON.stringify({items:[...favs]}));
+   storeFav();
 };
 
 const removeFav = (id) => {
    favs.splice(favs.indexOf(id), 1);
-   localStorage.setItem('favorites', JSON.stringify({items:[...favs]}));
+   storeFav();
 };
 
 const updateBackground = (e) => {

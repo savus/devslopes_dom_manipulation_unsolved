@@ -65,5 +65,6 @@ sortBtn.forEach((btn) => {
    const sortDir = btn.dataset.sortdir;
    btn.addEventListener('click', function() {
       sortData(sortDir);
+      btn.dataset.sortdir = sortDir;
    });
 });
